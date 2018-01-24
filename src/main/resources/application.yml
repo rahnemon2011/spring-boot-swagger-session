@@ -1,0 +1,55 @@
+spring:
+  profiles:
+    active: "development"
+  datasource:
+    dbcp2:
+      url: jdbc:h2:mem:AZ;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+      driver-class-name: org.h2.Driver
+      username: sa
+      password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+  redis:
+    host: localhost
+    port: 6379
+#    password: secret
+  session:
+    store-type: redis
+# this resolves the problem with LocalDate in Java8
+  jackson:
+    serialization:
+      write_dates_as_timestamps: false
+
+# logging
+logging:
+  level:
+    root: error
+    org.springframework: error
+    org.springframework.data: debug
+    com.hadi: info
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file: /home/hadi/studentapplication.log
+
+---
+
+spring:
+  profiles: production
+
+---
+
+spring:
+  profiles: development
+  datasource:
+      url: jdbc:mysql://localhost/TestDB?useUnicode=yes&characterEncoding=UTF-8
+      username: hbstudent
+      password: hbStudent123!
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    show-sql: true
+
